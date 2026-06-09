@@ -1,9 +1,11 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "lib": ["ESNext"],
-    "types": ["node"]
+    "types": ["node"],
+    "outDir": "./out/tsc/node",
+    "tsBuildInfoFile": "./out/tsc/node.tsbuildinfo"
   },
   "include": [
     "src/main/**/*.ts",

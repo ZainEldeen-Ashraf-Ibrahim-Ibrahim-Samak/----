@@ -1,12 +1,15 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "outDir": "./out/tsc/web",
+    "tsBuildInfoFile": "./out/tsc/web.tsbuildinfo"
   },
   "include": [
     "src/renderer/**/*.ts",
     "src/renderer/**/*.tsx",
+    "src/renderer/**/*.json",
     "src/shared/**/*.ts"
   ]
 }

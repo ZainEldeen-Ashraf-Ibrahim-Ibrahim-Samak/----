@@ -8,6 +8,15 @@
 
 **Input**: User description: "plan001.md — EduCenter Financial Management System: a cross-platform desktop application for managing the complete financial and operational lifecycle of a multi-center educational business (two centers, three service lines, a partner company, and the owner's personal finances) — offline-first with cloud sync, bilingual (Arabic RTL / English LTR), themeable, and white-labelable."
 
+## Clarifications
+
+### Session 2026-06-09
+
+- Q: Should the app require a local lock (PIN/password) on launch to protect financial data? → A: Optional PIN/password — off by default, owner can enable a local lock required on launch.
+- Q: Is v1 used on a single machine or synced across multiple of the owner's devices? → A: Multi-device via cloud sync — multi-device use and conflict resolution are explicitly in v1 scope.
+- Q: Does v1 need a manual local backup/restore of the entire database? → A: Yes — owner can export a full backup file and restore from it.
+- Q: What data volume should the design target (sessions per month across all centers)? → A: 10,000+ sessions/month, with multiple years of history retained.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Record Sessions & Auto-Calculate Revenue Split (Priority: P1)
@@ -305,6 +314,12 @@ synchronize and the indicator transitions offline → syncing → synced.
 - **FR-040**: System MUST resolve sync conflicts deterministically (most-recent-change-wins) while retaining a per-record audit trail of device and timestamp.
 - **FR-041**: System MUST display sync status (offline, syncing, synced, failed) and provide a viewable sync log.
 - **FR-042**: System MUST retry failed or interrupted syncs safely without creating duplicates.
+- **FR-045**: System MUST support multi-device use for a single owner: the same account's data syncs across more than one machine, and per-record device + timestamp tracking is used for conflict resolution.
+- **FR-046**: System MUST let the owner export a full local backup to a file and restore the database from such a backup file, independent of cloud sync.
+
+**Security & access**
+
+- **FR-047**: System MUST provide an optional local lock (PIN or password), disabled by default, which when enabled is required to open the application; the app MUST remain fully functional with the lock disabled.
 
 **Platform & localization**
 
@@ -345,10 +360,16 @@ synchronize and the indicator transitions offline → syncing → synced.
 - **SC-010**: Due alerts (rent, installment, gam3eyya, subscription) fire at their configured times with no missed or duplicate alerts.
 - **SC-011**: Across all five financial entities, personal and business cash flows never co-mingle in any report or total.
 - **SC-012**: Zero data loss occurs across app crashes — confirmed local persistence before UI update and recoverable unsaved drafts.
+- **SC-013**: The owner can export a full backup file and fully restore the database from it on the same or another machine with no data loss.
+- **SC-014**: Performance targets (SC-001, SC-003, SC-004) continue to hold with a database containing 10,000+ sessions per month and multiple years of accumulated history.
+- **SC-015**: With the optional local lock enabled, the application cannot be opened without the correct PIN/password; with it disabled, the app opens directly.
 
 ## Assumptions
 
-- The application is single-owner/single-operator per installation; multi-user roles, permissions, and login are out of scope for v1 (no authentication beyond optional local protection).
+- The application is single-owner/single-operator; multi-user roles and permissions are out of scope for v1. Access protection is an optional local lock (PIN/password), off by default (see FR-047) — there is no multi-user login.
+- Multi-device use by the single owner IS in scope for v1: the owner may run the app on more than one machine with cloud sync keeping them consistent (see FR-045), so conflict resolution is exercised, not merely theoretical.
+- A full local backup can be exported to a file and restored independently of cloud sync (see FR-046); cloud sync is not the only recovery path.
+- The system is designed to handle 10,000+ sessions per month across all centers with multiple years of retained history; performance targets must hold at that scale (see SC-014).
 - Currency is EGP only in v1; multi-currency is out of scope.
 - Dates default to Gregorian; Hijri display and Arabic-Indic numerals are optional toggles, not the default.
 - The cloud sync target is a hosted document database the owner controls; an account/connection is configured once in settings, and sync is best-effort background, not real-time collaboration.

@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "إديوسنتر",
+    "dashboard": "الرئيسية",
+    "centers": "السناتر",
+    "teachers": "المدرسين",
+    "log_session": "تسجيل حصة",
+    "sessions_log": "سجل الحصص",
+    "settings": "الإعدادات"
+  }
+}

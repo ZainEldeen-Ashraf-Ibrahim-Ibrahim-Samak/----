@@ -1,0 +1,20 @@
+appId: com.educenter.finance
+productName: EduCenter Finance
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/main/**/*
+  - out/preload/**/*
+  - out/renderer/**/*
+win:
+  target: nsis
+mac:
+  target: dmg
+  hardenedRuntime: true
+  entitlements: build/entitlements.mac.plist
+linux:
+  target: AppImage
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

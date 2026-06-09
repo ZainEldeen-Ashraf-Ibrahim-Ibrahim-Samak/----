@@ -1,0 +1,11 @@
+{
+  "app": {
+    "title": "EduCenter",
+    "dashboard": "Dashboard",
+    "centers": "Centers",
+    "teachers": "Teachers",
+    "log_session": "Log Session",
+    "sessions_log": "Sessions Log",
+    "settings": "Settings"
+  }
+}
